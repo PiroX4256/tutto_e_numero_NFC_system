@@ -17,3 +17,8 @@ Qui di seguito alcune specifiche:
 <h2>Credits</h2>
 <p>I presenti file sorgente sono concessi in licenza Open Source senza autorizzazione alla distribuzione o replica non autorizzata (GNU GPL v.3).<br>
 Ogni distribuzione e/o diffusione non autorizzata dei file contenuti in questa repository sarà perseguito a norma di legge.</p>
+
+<h2>Changelog</h2>
+<ul>
+  <li>09/10/2018 - OnLine | v. 0.1.1A</li>
+</ul>
