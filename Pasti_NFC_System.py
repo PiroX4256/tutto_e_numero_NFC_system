@@ -1,0 +1,206 @@
+import mysql.connector
+from time import *
+from Tkinter import *
+import nfc
+
+day = input("\n\nPer favore inserire l'ID del pasto. Puoi trovare gli ID corrispondenti qui sotto.\n -----ID----\n 1.MERCOLEDI CENA\n 2.GIOVEDI PRANZO \n 3.GIOVEDI CENA \n 4.VENERDI PRANZO \n 5.VENERDI CENA \n  Scelta: ")
+if day>5:
+    print ("Devi inserire un numero compreso tra 1 e 5. \nIl programma verra' ora automaticamente chiuso.")
+    sleep(3)
+    quit()
+
+elif day<1:
+    print ("Devi inserire un numero compreso tra 1 e 5. \nIl programma verra' ora automaticamente chiuso.")
+    sleep(3)
+    quit()
+
+machine = input("\n\nPer favore inserire l'ID macchina. Puoi trovare gli ID corrispondenti qui sotto.\n ----IDs----\n 1.BANCO PRIMI\n 2.BANCO SECONDI\n 3.FRUTTA / DESSERT\n   Scelta: ")
+if machine>3:
+    print ("Devi inserire un numero compreso tra 1 e 3. \nIl programma verra' ora automaticamente chiuso.")
+    sleep(3)
+    quit()
+
+elif machine<1:
+    print ("Devi inserire un numero compreso tra 1 e 3. \nIl programma verra' ora automaticamente chiuso.")
+    sleep(3)
+    quit()
+#=============================================================================
+# ----**** GRAPHIC INTERFACE DEFINITION ****---- #
+
+app = Tk()
+app.title("Food Convalidator")
+
+app.geometry("900x800+300+100")
+
+
+#the variable
+bv = StringVar()
+meal = StringVar()
+
+row1 = Label(app, text='Convalidatore', font=("Bahnschrift", 44)).pack(padx = 20, pady = 20)
+
+#the entry box
+b1 = Entry(app, textvariable=bv, font=("Bahnschrift", 44))
+b1.pack(padx = 20, pady = 15)
+b1.focus_force()
+
+status = Label(app, text="IN ATTESA", font=("Bahnschrift", 35), background="#cedbef")
+status.pack(padx = 20, pady = 30)
+
+name = Label(app, text="Braccialetto: ", font=("Bahnschrift", 28))
+name.pack(pady = 5)
+
+
+
+#=============================================================================
+# ----**** COUPON VALIDATION FUNCTION ****---- #
+
+def validate(event):
+    bu1.configure (text="")
+    bu1.update()
+    status.configure(text="AVVICINARE CHIP", background="#8af2fc")
+    status.update()
+    db = mysql.connector.connect(user='tuttoenumero', password='giugno98', host='137.74.231.85', database='tuttoenumero')   #Establish a MySQL database connection
+    cless = nfc.ContactlessFrontend("usb")  #Establish a USB connection with the reader device
+
+    if day== 1:                             #Link all meals to their definition // used during validation
+        meal = "MercolediCENA"
+        kw = "MC"
+    elif day==2:
+        meal = "GiovediPRANZO"
+        kw = "GP"
+    elif day==3:
+        meal = "GiovediCENA"
+        kw = "GC"
+    elif day==4:
+        meal = "VenerdiPRANZO"
+        kw = "VP"
+    elif day==5:
+        meal = "VenerdiCENA"
+        kw = "VC"
+
+    ID = StringVar()                        #Make the ID entry as a string format
+    tag = cless.connect(rdwr={'on-connect': lambda tag: False})     #Read the Unique ID (UID) of the NFC tag
+    beep = cless.connect(rdwr={'beep-on-connect':True})     #Enable beeping for near device communication
+    ID = tag.identifier.encode("hex")                       #Convert UID to hex base
+    cless.close()                           #Close NFC bus
+
+    name.configure (text= "Braccialetto: %s" % (ID))
+    name.update()
+
+    print "Braccialetto: ", ID
+    cursor = db.cursor()                    #Create MySQL DB pointer
+    cursor.execute("SELECT Tipo FROM Buoni_Pasto WHERE ID_Bracelet = '%s'" % (ID))  #Execute DB query to fetch meal type (Carnet or Single)
+    result = cursor.fetchall()              #Fetch results into an array
+    
+    if machine == 1:                        #Bind machine ID to meal name
+        portate = "Primo"
+    if machine == 2:
+        portate = "Secondo"
+    if machine == 3:
+        portate = "Dessert"
+
+    if cursor.rowcount == 0:                #If bracelet UID is not found in MySQL DB, return an error message
+        status.configure(text="BRACCIALETTO NON REGISTRATO", background="orange")  
+        print ("Non registrato")
+        status.update()
+        sleep(0.3)
+    for row in result:                      #If bracelet UID is foung, continue with device meal validation (in case it's a Carnet meal type)
+        if "Carnet" in row[0]:
+            cursor.execute ("SELECT %s FROM Buoni_Pasto WHERE ID_Bracelet = '%s'" % (portate, ID))  #Select meal to check if it's already been taken by customer.
+            validation = cursor.fetchall()
+            if day in validation[0]:        #Check previously validations (as declared above)
+                print("Already Used")
+                status.configure (text="PIETANZA GIA' RISCATTATA", background = "orange")
+                status.update()
+                sleep(0.3)
+            else:                           #if meal has not been taken before, validate the NFC tag checking if it's enabled to that specific meal.
+                cursor.execute("UPDATE Buoni_Pasto SET %s=%s WHERE ID_BRACELET='%s'" % (portate, day, ID))  #Set meal counter to day ID to prevent the "taking-again"
+                db.commit()
+                print("Valid")
+                status.configure (text="CARNET: VALID", background = "green")   #Display valid output
+                status.update()
+        else:
+            cursor.execute ("SELECT %s FROM Buoni_Pasto WHERE ID_Bracelet = '%s'" % (portate, ID))  #If coupon is not a "Carnet" type, proceed to single day validation
+            validation = cursor.fetchall()
+            if day in validation[0]:        #Check previously validations (as declared above)
+                print("Already Used")
+                status.configure (text="PIETANZA GIA' RISCATTATA", background = "orange")
+                status.update()
+                sleep(0.3)
+            else:                           #if meal has not been taken before, validate the NFC tag checking if it's enabled to that specific meal.
+                db.commit()
+                cursor.execute("SELECT Pasti FROM Buoni_Pasto WHERE ID_Bracelet = '%s'" % (ID))     #Select the single meal table, to check which meal are enabled
+                results = cursor.fetchall()
+                for rows in results:   
+                    if kw in rows[0]:       #Check the fetched result, precisely if the present meal is enabled.
+                        cursor.execute("UPDATE Buoni_Pasto SET %s=%s WHERE ID_BRACELET='%s'" % (portate, day, ID))  #Set meal counter to day ID to prevent the "taking-again"
+                        print ("Valid")     #Display valid output
+                        status.configure (text="VALID", background = "green")
+                        status.update()
+
+                    else:
+                        print ("Not Valid") #Display invalid output
+                        status.configure (text="NOT VALID", background = "red")  
+                        status.update()
+    cursor.close()                          #Close DB pointer
+    db.close()                              #Close DB connection
+    clear_textbox()                         #Clear the verification module in order to be able to verify another customer
+  
+
+#=============================================================================
+# ----**** GRAPHICS (PART II) ****---- #
+
+#b1.bind("<Button-1>", validate)
+b1.bind("<Return>", validate)
+
+
+bu1 = Button(app, text="Convalida", font=("Bahnschrift", 30))
+bu1.pack(padx = 20, pady = 20)
+bu1.bind("<Button-1>", validate)
+bu1.bind("<Return>", validate)
+
+quitter = Button(app, text="Quit", font=("Bahnschrift", 30), command = quit)
+quitter.pack(padx = 5, pady = 5)
+
+if day== 1:
+    meal = "Mercoledi CENA"
+elif day==2:
+    meal = "Giovedi PRANZO"
+elif day==3:
+    meal = "Giovedi CENA"
+elif day==4:
+    meal = "Venerdi PRANZO"
+elif day==5:
+    meal = "Venerdi CENA"
+
+date = Label(text = "Pasto: %s" % (meal), font=("Bahnschrift", 20), background = "#99ffe0")
+date.pack(pady = 25)
+
+if machine==1:
+    loc = "PRIMI PIATTI"
+elif machine==2:
+    loc = "SECONDI PIATTI"
+elif machine==3:
+    loc = "FRUTTA / DESSERT"
+
+type = Label(text = "Convalida: %s" % (loc), font=("Bahnschrift", 20), background = "#ffbb00")
+type.pack()
+
+
+def quit():
+    app.destroy()
+
+def clear_textbox():
+    sleep(0.7)
+    status.configure(text="IN ATTESA", background="#cedbef")
+    b1.delete(0, END)
+    bu1.configure (text="Convalida")
+    bu1.update
+    name.configure(text="Braccialetto:")
+    name.update()
+
+
+
+#the mainloop
+app.mainloop()
