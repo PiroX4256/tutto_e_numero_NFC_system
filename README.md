@@ -20,5 +20,5 @@ Ogni distribuzione e/o diffusione non autorizzata dei file contenuti in questa r
 
 <h2>Changelog</h2>
 <ul>
-  <li>09/10/2018 - OnLine | v. 0.1.1A</li>
+  <li><b>09/10/2018</b> - OnLine | v. 0.1.1</li>
 </ul>
