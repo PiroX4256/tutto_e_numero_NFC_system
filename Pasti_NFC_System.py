@@ -4,26 +4,16 @@ from Tkinter import *
 import nfc
 
 day = input("\n\nPer favore inserire l'ID del pasto. Puoi trovare gli ID corrispondenti qui sotto.\n -----ID----\n 1.MERCOLEDI CENA\n 2.GIOVEDI PRANZO \n 3.GIOVEDI CENA \n 4.VENERDI PRANZO \n 5.VENERDI CENA \n  Scelta: ")
-if day>5:
-    print ("Devi inserire un numero compreso tra 1 e 5. \nIl programma verra' ora automaticamente chiuso.")
-    sleep(3)
-    quit()
-
-elif day<1:
-    print ("Devi inserire un numero compreso tra 1 e 5. \nIl programma verra' ora automaticamente chiuso.")
-    sleep(3)
-    quit()
+while day<1||day>5:
+    day = input("Per favore inserire un giorno valido o premere \"q\" per uscire:")
+    if day=='q':
+        quit()
 
 machine = input("\n\nPer favore inserire l'ID macchina. Puoi trovare gli ID corrispondenti qui sotto.\n ----IDs----\n 1.BANCO PRIMI\n 2.BANCO SECONDI\n 3.FRUTTA / DESSERT\n   Scelta: ")
-if machine>3:
-    print ("Devi inserire un numero compreso tra 1 e 3. \nIl programma verra' ora automaticamente chiuso.")
-    sleep(3)
-    quit()
-
-elif machine<1:
-    print ("Devi inserire un numero compreso tra 1 e 3. \nIl programma verra' ora automaticamente chiuso.")
-    sleep(3)
-    quit()
+while machine<1||machine>3;
+    machine= input("Devi inserire un numero compreso tra 1 e 3, altrimenti premi \"q\" per uscire:")
+    if machine=='q':
+        quit()
 #=============================================================================
 # ----**** GRAPHIC INTERFACE DEFINITION ****---- #
 
@@ -92,7 +82,7 @@ def validate(event):
     cursor = db.cursor()                    #Create MySQL DB pointer
     cursor.execute("SELECT Tipo FROM Buoni_Pasto WHERE ID_Bracelet = '%s'" % (ID))  #Execute DB query to fetch meal type (Carnet or Single)
     result = cursor.fetchall()              #Fetch results into an array
-    
+
     if machine == 1:                        #Bind machine ID to meal name
         portate = "Primo"
     if machine == 2:
@@ -101,7 +91,7 @@ def validate(event):
         portate = "Dessert"
 
     if cursor.rowcount == 0:                #If bracelet UID is not found in MySQL DB, return an error message
-        status.configure(text="BRACCIALETTO NON REGISTRATO", background="orange")  
+        status.configure(text="BRACCIALETTO NON REGISTRATO", background="orange")
         print ("Non registrato")
         status.update()
         sleep(0.3)
@@ -132,7 +122,7 @@ def validate(event):
                 db.commit()
                 cursor.execute("SELECT Pasti FROM Buoni_Pasto WHERE ID_Bracelet = '%s'" % (ID))     #Select the single meal table, to check which meal are enabled
                 results = cursor.fetchall()
-                for rows in results:   
+                for rows in results:
                     if kw in rows[0]:       #Check the fetched result, precisely if the present meal is enabled.
                         cursor.execute("UPDATE Buoni_Pasto SET %s=%s WHERE ID_BRACELET='%s'" % (portate, day, ID))  #Set meal counter to day ID to prevent the "taking-again"
                         print ("Valid")     #Display valid output
@@ -141,12 +131,12 @@ def validate(event):
 
                     else:
                         print ("Not Valid") #Display invalid output
-                        status.configure (text="NOT VALID", background = "red")  
+                        status.configure (text="NOT VALID", background = "red")
                         status.update()
     cursor.close()                          #Close DB pointer
     db.close()                              #Close DB connection
     clear_textbox()                         #Clear the verification module in order to be able to verify another customer
-  
+
 
 #=============================================================================
 # ----**** GRAPHICS (PART II) ****---- #
