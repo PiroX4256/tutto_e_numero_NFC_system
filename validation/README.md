@@ -1,6 +1,6 @@
-<h1>Tutto è Numero - Edizione 2019</h1><br>
-<h2>Sistema di validazione elettronica dei buoni pasto.</h2>
-<p>Il presente software consente la validazione elettronica dei buoni pasto, venduti attraverso il sito web della manifestazione, in fase di prelevamento cibo.
+<h1>Tutto è Numero - Edizione 2019</h1>
+<h2>Sistema di validazione elettronica dei buoni pasto e del servizio navetta</h2>
+<p>Il presente software consente la validazione elettronica dei buoni pasto e del servizio navetta, servizi venduti attraverso il sito web della manifestazione. Tale validazione avviene in fase di prelevamento cibo o salita sul pullmino navetta.
 <br>Esso è stato testato con sistema operativo Windows 10 e come linguaggio usa Python. E' compatibile anche con linux (untested).<br>
 Qui di seguito alcune specifiche:
 <ul>
@@ -19,7 +19,9 @@ Qui di seguito alcune specifiche:
 Ogni distribuzione e/o diffusione non autorizzata dei file contenuti in questa repository sarà perseguito a norma di legge.</p>
 
 <h2>Changelog</h2>
+<h4>Legenda: DATA | MODIFICA | VERSIONE PACCHETTO</h4>
 <ul>
   <li><b>09/10/2018</b> - OnLine | v. 0.1.1</li>
-  <li><b>27/02/2019</b> - OnLine i software per il check-in e la convalida del servizio navetta | v. 0.2.1</li>
+  <li><b>27/02/2019</b> - Modifiche di sicurezza e stabilità al software di validazione dei buoni pasto elettronici | v. 0.1.2</li>
+  <li><b>27/02/2019</b> - OnLine il software di validazione del servizio navetta | v. 0.2.1</li>
 </ul>
