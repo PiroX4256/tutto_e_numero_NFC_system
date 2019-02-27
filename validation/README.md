@@ -24,4 +24,5 @@ Ogni distribuzione e/o diffusione non autorizzata dei file contenuti in questa r
   <li><b>09/10/2018</b> - OnLine | v. 0.1.1</li>
   <li><b>27/02/2019</b> - Modifiche di sicurezza e stabilità al software di validazione dei buoni pasto elettronici | v. 0.1.2</li>
   <li><b>27/02/2019</b> - OnLine il software di validazione del servizio navetta | v. 0.2.1</li>
+  <li><b>27/02/2019</b> - Modifica ai caratteri non-ASCII per le lettere accentate | v. 0.2.2</li>
 </ul>
