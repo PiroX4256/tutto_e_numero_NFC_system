@@ -1,4 +1,4 @@
-<h1>Tutto è Numero - Edizione 2019</h1><br>
+<h1>Tutto è Numero - Edizione 2019</h1>
 <h2>Sistema di validazione elettronica dei buoni pasto.</h2>
 <h3>Software di Check-In</h3>
 <p>Il presente software consente l'assegnazione dei buoni pasto e del servizio navetta (venduti attraverso il sito web della manifestazione) ai braccialetti con chip NFC previsti.
