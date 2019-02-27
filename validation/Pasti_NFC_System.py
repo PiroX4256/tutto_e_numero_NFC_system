@@ -147,7 +147,7 @@ def validate(event):
 # --- GRAPHIC INTERFACE DEFINITION ---
 
 app = Tk()
-app.title("Tutto e' Numero - Food Convalidator")
+app.title("Tutto e" + u'\u0300' +" Numero - Food Convalidator")
 
 app.geometry("900x800+300+100")
 
