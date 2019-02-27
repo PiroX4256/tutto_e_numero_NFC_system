@@ -77,7 +77,7 @@ def clear_textbox():
 
 # --- GRAPHIC INTERFACE DEFINITION ---
 app = Tk()
-app.title("Tutto è Numero 2019 - Convalidatore Navetta")
+app.title("Tutto e" + u'\u0300' +" Numero 2019 - Convalidatore Navetta")
 app.geometry("900x800+200+100")
 
 title = Label (app, text="Tutto e' Numero 2019", font=("Bahnschrift", 50), fg="#2077bf").pack(padx = 5, pady =0) #Title
