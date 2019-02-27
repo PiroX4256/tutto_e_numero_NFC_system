@@ -1,6 +1,5 @@
 <h1>Tutto è Numero - Edizione 2019</h1>
-<h2>Sistema di validazione elettronica dei buoni pasto.</h2>
-<h3>Software di Check-In</h3>
+<h2>Sistema di assegnazione elettronica dei buoni pasto/navetta in fase di check-in.</h2>
 <p>Il presente software consente l'assegnazione dei buoni pasto e del servizio navetta (venduti attraverso il sito web della manifestazione) ai braccialetti con chip NFC previsti.
 <br>Esso è stato testato con sistema operativo Windows 10 e come linguaggio usa Python. E' compatibile anche con linux (untested).<br>
 Qui di seguito alcune specifiche:
