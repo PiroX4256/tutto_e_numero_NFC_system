@@ -46,7 +46,7 @@ elif machine<1:
 
 
 #=============================================================================
-# ----**** COUPON VALIDATION FUNCTION ****---- #
+# --- COUPON VALIDATION FUNCTION ---
 
 def validate(event):
     bu1.configure (text="")
@@ -104,7 +104,7 @@ def validate(event):
             validation = cursor.fetchall()
             if day in validation[0]:        #Check previously validations (as declared above)
                 print("Already Used")
-                status.configure (text="PIETANZA GIA' RISCATTATA", background = "orange")
+                status.configure (text="PIETANZA GIA" + u'\u0300' +" RISCATTATA", background = "orange")
                 status.update()
                 sleep(0.3)
             else:                           #if meal has not been taken before, validate the NFC tag checking if it's enabled to that specific meal.
@@ -118,7 +118,7 @@ def validate(event):
             validation = cursor.fetchall()
             if day in validation[0]:        #Check previously validations (as declared above)
                 print("Already Used")
-                status.configure (text="PIETANZA GIA' RISCATTATA", background = "orange")
+                status.configure (text="PIETANZA GIA" + u'\u0300' +" RISCATTATA", background = "orange")
                 status.update()
                 sleep(0.3)
             else:                           #if meal has not been taken before, validate the NFC tag checking if it's enabled to that specific meal.
@@ -144,16 +144,16 @@ def validate(event):
 
 #=============================================================================
 
-# ----**** GRAPHIC INTERFACE DEFINITION ****---- #
+# --- GRAPHIC INTERFACE DEFINITION ---
 
 app = Tk()
 app.title("Tutto e' Numero - Food Convalidator")
 
 app.geometry("900x800+300+100")
 
-title = Label (app, text="Tutto e' Numero 2019", font=("Bahnschrift", 50), fg="#d34343").pack(padx = 5, pady =0) #Title
+title = Label (app, text="Tutto e' Numero 2019", font=("Bahnschrift", 50), fg="#2077bf").pack(padx = 5, pady =0) #Title
 
-row1 = Label(app, text = "Food Convalidation", font=("Bahnschrift", 35), fg="#d34343").pack(padx = 20, pady = 0) #First text row
+row1 = Label(app, text = "Convalida Pasti", font=("Bahnschrift", 35), fg="#d34343").pack(padx = 20, pady = 0) #First text row
 
 
 #the variable
@@ -221,7 +221,4 @@ def clear_textbox():
     name.configure(text="Braccialetto:")
     name.update()
 
-
-
-#the mainloop
 app.mainloop()
