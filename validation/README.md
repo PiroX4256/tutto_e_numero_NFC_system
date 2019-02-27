@@ -11,7 +11,7 @@ Qui di seguito alcune specifiche:
 <h2>Requisiti di sistema</h2>
 <ul>
 <li>Python v. 2.7 (non compatibile con Python3</li>
-<li>Libreria nfcpy v. 0.13.5</li>
+  <li>Libreria <a href="https://nfcpy.readthedocs.io/en/latest/">nfcpy</a> v. 0.13.5</li>
 <li><b>[WINDOWS only]</b> WinUSB driver + libusb</li>
 </ul>
 <h2>Credits</h2>
