@@ -21,4 +21,5 @@ Ogni distribuzione e/o diffusione non autorizzata dei file contenuti in questa r
 <h2>Changelog</h2>
 <ul>
   <li><b>09/10/2018</b> - OnLine | v. 0.1.1</li>
+  <li><b>27/02/2019</b> - OnLine i software per il check-in e la convalida del servizio navetta | v. 0.2.1</li>
 </ul>
