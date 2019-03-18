@@ -15,6 +15,7 @@ Qui di seguito alcune specifiche:
 <li>Python v. 2.7 (non compatibile con Python3</li>
   <li>Libreria <a href="https://nfcpy.readthedocs.io/en/latest/" target="_blank">nfcpy</a> v. 0.13.5</li>
   <li><b>[WINDOWS only]</b> <a href="https://zadig.akeo.ie/" target=_blank">WinUSB driver</a> + <a href="https://libusb.info/" target="_blank">libusb</a></li>
+    <li>Database MySQL Community Edition v. 8.0.15</li>
 </ul>
 <h2>Credits</h2>
 <p>I presenti file sorgente sono concessi in licenza Open Source senza autorizzazione alla distribuzione o replica non autorizzata (GNU GPL v.3).<br>
