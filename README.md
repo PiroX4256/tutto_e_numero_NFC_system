@@ -1,5 +1,5 @@
 <h1>Tutto è Numero - Edizione 2019</h1>
-<h2>Gestione elettronica deella manifestazione Tutto è Numero </h2>
+<h2>Gestione elettronica della manifestazione Tutto è Numero </h2>
 <p>I presenti softwares consentono l'assegnazione dei buoni pasto e del servizio navetta (venduti attraverso il sito web della manifestazione) ai braccialetti con chip NFC previsti, nonchè la validazione degli stessi.
 <br>Esso è stato testato con sistema operativo Windows 10 e come linguaggio usa Python. E' compatibile anche con linux (untested).<br>
 
