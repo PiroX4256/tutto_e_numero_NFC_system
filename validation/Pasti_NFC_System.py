@@ -9,11 +9,11 @@ import nfc
 
 # --- MySQL CONFIGURATION ---
 # --- IMPORTANT: Please insert your MySQL Server login data, in order to establish a connection to the server
-db_host = "13.94.187.146"        #Database hostname
-db_name = "tuttoenumero"        #Database name
-db_user = "tuttoenumero"        #Database login user
-db_password = "giugno98"    #Database login password
-db_table = "Buoni_pasto"    #Table name in MySQL database
+db_host = ""        #Database hostname
+db_name = ""        #Database name
+db_user = ""        #Database login user
+db_password = ""    #Database login password
+db_table = ""    #Table name in MySQL database
 
 # --- END OF MySQL CONFIGURATION ---
 
@@ -41,8 +41,6 @@ elif machine<1:
     sleep(3)
     quit()
 #=============================================================================
-
-
 
 
 #=============================================================================
@@ -74,7 +72,7 @@ def validate(event):
 
     ID = StringVar()                        #Make the ID entry as a string format
     tag = cless.connect(rdwr={'on-connect': lambda tag: False})     #Read the Unique ID (UID) of the NFC tag
-    beep = cless.connect(rdwr={'beep-on-connect':True})     #Enable beeping for near device communication
+    #beep = cless.connect(rdwr={'beep-on-connect':True})     #Enable beeping for near device communication
     ID = tag.identifier.encode("hex")                       #Convert UID to hex base
     cless.close()                           #Close NFC bus
 
@@ -106,13 +104,20 @@ def validate(event):
                 print("Already Used")
                 status.configure (text="PIETANZA GIA" + u'\u0300' +" RISCATTATA", background = "orange")
                 status.update()
+                cursor.execute("SELECT Last_Use FROM %s WHERE ID_Bracelet = '%s'" % (db_table, ID))
+                last = cursor.fetchall()
+                last_use.configure(text = "Ultimo utilizzo: %s" % (last[0]))
+                last_use.update()
                 sleep(0.3)
             else:                           #if meal has not been taken before, validate the NFC tag checking if it's enabled to that specific meal.
-                cursor.execute("UPDATE %s SET %s=%s WHERE ID_BRACELET='%s'" % (db_table, portate, day, ID))  #Set meal counter to day ID to prevent the "taking-again"
+                currentDT = datetime.datetime.now()     #Extract date and time from PC
+                cursor.execute("UPDATE %s SET Last_Use = '%s' WHERE ID_BRACELET = '%s'" % (db_table, str(currentDT)[:19], ID))      #Insert date and time into MySQL db
                 db.commit()
                 print("Valid")
                 status.configure (text="CARNET: VALID", background = "green")   #Display valid output
                 status.update()
+                cursor.execute("UPDATE %s SET %s=%s WHERE ID_BRACELET='%s'" % (db_table, portate, day, ID))  #Set meal counter to day ID to prevent the "taking-again"
+                db.commit()
         else:
             cursor.execute ("SELECT %s FROM %s WHERE ID_Bracelet = '%s'" % (portate, db_table, ID))  #If coupon is not a "Carnet" type, proceed to single day validation
             validation = cursor.fetchall()
@@ -120,18 +125,25 @@ def validate(event):
                 print("Already Used")
                 status.configure (text="PIETANZA GIA" + u'\u0300' +" RISCATTATA", background = "orange")
                 status.update()
-                sleep(0.3)
+                cursor.execute("SELECT Last_Use FROM %s WHERE ID_Bracelet = '%s'" % (db_table, ID))
+                last = cursor.fetchall()
+                last_use.configure(text = "Ultimo utilizzo: %s" % (last[0]))
+                last_use.update()
+                sleep(0.5)
             else:                           #if meal has not been taken before, validate the NFC tag checking if it's enabled to that specific meal.
                 db.commit()
                 cursor.execute("SELECT Pasti FROM %s WHERE ID_Bracelet = '%s'" % (db_table, ID))     #Select the single meal table, to check which meal are enabled
                 results = cursor.fetchall()
                 for rows in results:   
                     if kw in rows[0]:       #Check the fetched result, precisely if the present meal is enabled.
-                        cursor.execute("UPDATE %s SET %s=%s WHERE ID_BRACELET='%s'" % (db_table, portate, day, ID))  #Set meal counter to day ID to prevent the "taking-again"
+                        currentDT = datetime.datetime.now()     #Extract date and time from PC
+                        cursor.execute("UPDATE %s SET Last_Use = '%s' WHERE ID_BRACELET = '%s'" % (db_table, str(currentDT)[:19], ID))      #Insert date and time into MySQL db
                         db.commit()
                         print ("Valid")     #Display valid output
                         status.configure (text="VALID", background = "green")
                         status.update()
+                        cursor.execute("UPDATE %s SET %s=%s WHERE ID_BRACELET='%s'" % (db_table, portate, day, ID))  #Set meal counter to day ID to prevent the "taking-again"
+                        db.commit()
 
                     else:
                         print ("Not Valid") #Display invalid output
@@ -147,11 +159,11 @@ def validate(event):
 # --- GRAPHIC INTERFACE DEFINITION ---
 
 app = Tk()
-app.title("Tutto e" + u'\u0300' +" Numero - Food Convalidator")
+app.title("Tutto e" + u'\u0300' + " Numero - Food Convalidator")
 
-app.geometry("900x800+300+100")
+app.geometry("900x850+500+70")
 
-title = Label (app, text="Tutto e' Numero 2019", font=("Bahnschrift", 50), fg="#2077bf").pack(padx = 5, pady =0) #Title
+title = Label (app, text="Tutto e" + u'\u0300' +" Numero 2019", font=("Bahnschrift", 50), fg="#2077bf").pack(padx = 5, pady =0) #Title
 
 row1 = Label(app, text = "Convalida Pasti", font=("Bahnschrift", 35), fg="#d34343").pack(padx = 20, pady = 0) #First text row
 
@@ -208,6 +220,9 @@ elif machine==3:
 type = Label(text = "Convalida: %s" % (loc), font=("Bahnschrift", 20), background = "#ffbb00")
 type.pack()
 
+last_use = Label(text="Ultimo utilizzo: ", font=("Bahnschrift", 20))
+last_use.pack(pady=20)
+
 
 def quit():
     app.destroy()
@@ -220,5 +235,7 @@ def clear_textbox():
     bu1.update
     name.configure(text="Braccialetto:")
     name.update()
+    last_use.configure(text="Ultimo utilizzo: ")
+    last_use.update()
 
 app.mainloop()
