@@ -11,8 +11,8 @@ Qui di seguito alcune specifiche:
 </ul>
 <h2>Requisiti di sistema</h2>
 <ul>
-<li>Python v. 2.7 (non compatibile con Python3</li>
-<li>Python v. 2.7 (non compatibile con Python3</li>
+<li>Python v. 2.7 (non compatibile con Python3)</li>
+<li>Python v. 2.7 (non compatibile con Python3)</li>
   <li>Libreria <a href="https://nfcpy.readthedocs.io/en/latest/" target="_blank">nfcpy</a> v. 0.13.5</li>
   <li><b>[WINDOWS only]</b> <a href="https://zadig.akeo.ie/" target=_blank">WinUSB driver</a> + <a href="https://libusb.info/" target="_blank">libusb</a></li>
     <li>Database MySQL Community Edition v. 8.0.15</li>
