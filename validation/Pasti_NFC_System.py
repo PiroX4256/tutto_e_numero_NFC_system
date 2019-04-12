@@ -6,14 +6,20 @@ import mysql.connector
 from time import *
 from Tkinter import *
 import nfc
+import datetime
 
 # --- MySQL CONFIGURATION ---
 # --- IMPORTANT: Please insert your MySQL Server login data, in order to establish a connection to the server
-db_host = ""        #Database hostname
-db_name = ""        #Database name
-db_user = ""        #Database login user
-db_password = ""    #Database login password
-db_table = ""    #Table name in MySQL database
+f = open("address.txt", "r")
+contents = f.read().splitlines()
+print contents[0]
+f.close()
+
+db_host = contents[0]        #Database hostname
+db_name = "tuttoenumero"        #Database name
+db_user = "tuttoenumero"        #Database login user
+db_password = "giugno98"    #Database login password
+db_table = "Buoni_pasto"    #Table name in MySQL database
 
 # --- END OF MySQL CONFIGURATION ---
 
