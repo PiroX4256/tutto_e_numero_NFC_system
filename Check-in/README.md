@@ -23,4 +23,5 @@ Ogni distribuzione e/o diffusione non autorizzata dei file contenuti in questa r
 <ul>
   <li><b>27/02/2019</b> - OnLine i software per il check-in e la convalida del servizio navetta | v. 0.2.1</li>
   <li><b>27/02/2019</b> - Modifica ai caratteri non-ASCII per le lettere accentate | v. 0.2.2</li>
+  <li><b>12/04/2019</b> - Aggiunti i pacchetti completi e il software per il check-in su luogo dell'evento</li>
 </ul>
