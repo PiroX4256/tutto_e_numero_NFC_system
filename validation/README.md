@@ -26,4 +26,5 @@ Ogni distribuzione e/o diffusione non autorizzata dei file contenuti in questa r
   <li><b>27/02/2019</b> - OnLine il software di validazione del servizio navetta | v. 0.2.1</li>
   <li><b>27/02/2019</b> - Modifica ai caratteri non-ASCII per le lettere accentate | v. 0.2.2</li>
   <li><b>30/03/2019</b> - Aggiunto sistema di scrittura di data e ora di utilizzo (pasti) in caso di doppie validazioni | v. 0.2.3</li>
+  <li><b>12/04/2019</b> - Aggiunto sistema di identificazione da braccialetto, aggiunto pacchetto completo | v. 0.3.1</li>
 </ul>
