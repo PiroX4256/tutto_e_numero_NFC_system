@@ -9,7 +9,12 @@ from time import *
 
     # --- MySQL CONFIGURATION ---
     # --- IMPORTANT: Please insert your MySQL Server login data, in order to establish a connection to the server
-db_host = "13.94.187.146"        #Database hostname
+f = open("address.txt", "r")
+contents = f.read().splitlines()
+print contents[0]
+f.close()
+
+db_host = contents[0]         #Database hostname
 db_name = "tuttoenumero"        #Database name
 db_user = "tuttoenumero"        #Database login user
 db_password = "giugno98"    #Database login password
