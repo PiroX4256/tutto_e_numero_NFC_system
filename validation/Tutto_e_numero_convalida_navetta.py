@@ -69,7 +69,7 @@ def validate(event):
 def clear_textbox():
     sleep(0.7)
     status.configure(text="IN ATTESA", background="#cedbef")
-    b1.delete(0, END)
+    status.update()
     bu1.configure (text="Convalida")
     bu1.update
     name.configure(text="Braccialetto:")
@@ -83,7 +83,7 @@ def clear_textbox():
 # --- GRAPHIC INTERFACE DEFINITION ---
 app = Tk()
 app.title("Tutto e" + u'\u0300' +" Numero 2019 - Convalidatore Navetta")
-app.geometry("900x800+200+100")
+app.geometry("900x650+200+100")
 
 title = Label (app, text="Tutto e' Numero 2019", font=("Bahnschrift", 50), fg="#2077bf").pack(padx = 5, pady =0) #Title
 
@@ -91,17 +91,13 @@ row1 = Label(app, text = "Convalida Navetta", font=("Bahnschrift", 35), fg="#000
 
 bv = StringVar()    #bv variable
 
-b1 = Entry(app, textvariable=bv, font=("Bahnschrift", 44)) #Entry box
-b1.pack(padx = 20, pady = 15)
-b1.focus_force()
-
 status = Label(app, text="IN ATTESA", font=("Bahnschrift", 35), background="#cedbef")
 status.pack(padx = 20, pady = 30)
+status.focus_force()
+status.bind("<Return>", validate)
 
 name = Label(app, text="Braccialetto: ", font=("Bahnschrift", 28))
 name.pack(pady = 5)
-
-b1.bind("<Return>", validate)
 
 client = Label(app, text="Cliente: ", font=("Bahnschrift", 25))
 client.pack(padx = 20, pady = 20)
@@ -109,7 +105,7 @@ client.pack(padx = 20, pady = 20)
 bu1 = Button(app, text="Convalida", font=("Bahnschrift", 30))
 bu1.pack(padx = 20, pady = 20)
 bu1.bind("<Button-1>", validate)
-bu1.bind("<Return>", validate)
+
 
 quitter = Button(app, text="Esci", font=("Bahnschrift", 30), command = quit)
 quitter.pack(padx = 5, pady = 5)

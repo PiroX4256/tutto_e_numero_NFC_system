@@ -25,14 +25,14 @@ db_table = "Buoni_pasto"    #Table name in MySQL database
 
 # ---*** BOOT PARAMETERS ***--- #
 
-day = input("\n\nPer favore inserire l'ID del pasto. Puoi trovare gli ID corrispondenti qui sotto.\n -----ID----\n 1.MERCOLEDI CENA\n 2.GIOVEDI PRANZO \n 3.GIOVEDI CENA \n 4.VENERDI PRANZO \n 5.VENERDI CENA \n  Scelta: ")
-if day>5:
-    print ("Devi inserire un numero compreso tra 1 e 5. \nIl programma verra' ora automaticamente chiuso.")
+day = input("\n\nPer favore inserire l'ID del pasto. Puoi trovare gli ID corrispondenti qui sotto.\n -----ID----\n 1.MERCOLEDI CENA\n 2.GIOVEDI PRANZO \n 3.GIOVEDI CENA \n 4.VENERDI PRANZO \n 5.VENERDI CENA \n 6.SABATO PRANZO \n Scelta: ")
+if day>6:
+    print ("Devi inserire un numero compreso tra 1 e 6. \nIl programma verra' ora automaticamente chiuso.")
     sleep(3)
     quit()
 
 elif day<1:
-    print ("Devi inserire un numero compreso tra 1 e 5. \nIl programma verra' ora automaticamente chiuso.")
+    print ("Devi inserire un numero compreso tra 1 e 6. \nIl programma verra' ora automaticamente chiuso.")
     sleep(3)
     quit()
 
@@ -75,6 +75,9 @@ def validate(event):
     elif day==5:
         meal = "VenerdiCENA"
         kw = "VC"
+    elif day==6:
+        meal = "SabatoPRANZO"
+        kw = "SP"
 
     ID = StringVar()                        #Make the ID entry as a string format
     tag = cless.connect(rdwr={'on-connect': lambda tag: False})     #Read the Unique ID (UID) of the NFC tag
@@ -167,7 +170,7 @@ def validate(event):
 app = Tk()
 app.title("Tutto e" + u'\u0300' + " Numero - Food Convalidator")
 
-app.geometry("900x850+500+70")
+app.geometry("900x700+500+70")
 
 title = Label (app, text="Tutto e" + u'\u0300' +" Numero 2019", font=("Bahnschrift", 50), fg="#2077bf").pack(padx = 5, pady =0) #Title
 
@@ -179,19 +182,13 @@ bv = StringVar()
 meal = StringVar()
 
 
-#the entry box
-b1 = Entry(app, textvariable=bv, font=("Bahnschrift", 44))
-b1.pack(padx = 20, pady = 15)
-b1.focus_force()
-
 status = Label(app, text="IN ATTESA", font=("Bahnschrift", 35), background="#cedbef")
 status.pack(padx = 20, pady = 30)
+status.focus_force()
+status.bind("<Return>", validate)
 
 name = Label(app, text="Braccialetto: ", font=("Bahnschrift", 28))
 name.pack(pady = 5)
-
-#b1.bind("<Button-1>", validate)
-b1.bind("<Return>", validate)
 
 
 bu1 = Button(app, text="Convalida", font=("Bahnschrift", 30))
@@ -212,6 +209,8 @@ elif day==4:
     meal = "Venerdi PRANZO"
 elif day==5:
     meal = "Venerdi CENA"
+elif day==6:
+    meal = "Sabato PRANZO"
 
 date = Label(text = "Pasto: %s" % (meal), font=("Bahnschrift", 20), background = "#99ffe0")
 date.pack(pady = 25)
@@ -236,7 +235,7 @@ def quit():
 def clear_textbox():
     sleep(0.7)
     status.configure(text="IN ATTESA", background="#cedbef")
-    b1.delete(0, END)
+    status.update()
     bu1.configure (text="Convalida")
     bu1.update
     name.configure(text="Braccialetto:")
