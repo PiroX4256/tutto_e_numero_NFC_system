@@ -76,6 +76,8 @@ def Carnet ():
 
         cursor.execute("SELECT ID_Bracelet FROM %s WHERE (Nome, Cognome) = ('%s', '%s')" % (db_table, name_db, surname_db))
         already = cursor.fetchall()
+        cursor.execute("SELECT Tipo FROM %s WHERE (Nome, Cognome) = ('%s', '%s')" % (db_table, name_db, surname_db))
+        samecarnet = cursor.fetchall()
         if cursor.rowcount == 0:
             print "Paolino"
             cursor.execute("SELECT ID_Bracelet FROM %s WHERE ID_Bracelet = '%s'" % (db_table, ID))
@@ -93,22 +95,28 @@ def Carnet ():
                 status.update()
                 sleep(1.5)
             else:
-                status.configure(text="ERRORE: BRACCIALETTO GIA" + u'\u0300' + " REGISTRATO", background="red", font=("Bahnschrift", 23))
+                status.configure(text="ERRORE: BRACCIALETTO GIA" + u'\u0300' + " REGISTRATO\nAD ALTRO NOMINATIVO", background="red", font=("Bahnschrift", 23))
                 status.update()
                 sleep(1.5)
         else:
             sleep(2)
             print "Paolone"
             print already
-            for rows in already:
-                if ID in rows[0]:
-                    cursor.execute("UPDATE %s SET Tipo = '%s' WHERE ID_Bracelet='%s'" % (db_table, "Carnet", ID))
-                    db.commit()
-                    status.configure(text="SUCCESS", background="#289b22")
+            for rows in samecarnet:
+                if "Carnet" in rows[0]:
+                    status.configure(text="ALERT: CARNET GIA" + u'\u0300' + " PRESENTE \nSUL BRACCIALETTO", background="#e8dc86", font=("Bahnschrift", 23))
                     status.update()
+                    sleep(2)
                 else:
-                    status.configure(text="ERRORE: BRACCIALETTO/NOMINATIVO\nDISCORDANTI", background="red", font=("Bahnschrift", 23))
-                    status.update()
+                    for rows in already:
+                        if ID in rows[0]:
+                            cursor.execute("UPDATE %s SET Tipo = '%s' WHERE ID_Bracelet='%s'" % (db_table, "Carnet", ID))
+                            db.commit()
+                            status.configure(text="SUCCESS", background="#289b22")
+                            status.update()
+                        else:
+                            status.configure(text="ERRORE: BRACCIALETTO/NOMINATIVO\nDISCORDANTI", background="red", font=("Bahnschrift", 23))
+                            status.update()
 
 
             sleep(1.5)

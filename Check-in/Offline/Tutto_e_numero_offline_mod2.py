@@ -47,7 +47,11 @@ def validate():
             vc = "VC"
         else:
             vc = ""
-        meal = ("%s %s %s %s %s" % (mc, gp, gc, vp, vc))
+        if SP.get()==1:
+            sp = "SP"
+        else:
+            sp = ""
+        meal = ("%s %s %s %s %s %s" % (mc, gp, gc, vp, vc, sp))
         print meal
         # --- END OF MEAL SELECTION IDENTIFICATION ---
 
@@ -153,6 +157,7 @@ GP = IntVar()
 GC = IntVar()
 VP = IntVar()
 VC = IntVar()
+SP = IntVar()
 
 
 Checkbutton(sel, text="Mercoledi Cena", font=("Bahnschrift", 10), variable=MC).grid(row=1, sticky=W)    #Selection ticks
@@ -160,6 +165,7 @@ Checkbutton(sel, text="Giovedi Pranzo", font=("Bahnschrift", 10), variable=GP).g
 Checkbutton(sel, text="Giovedi Cena", font=("Bahnschrift", 10), variable=GC).grid(row=2, column=2, sticky=W)
 Checkbutton(sel, text="Venerdi Pranzo", font=("Bahnschrift", 10), variable=VP).grid(row=3, sticky=W)
 Checkbutton(sel, text="Venerdi Cena", font=("Bahnschrift", 10), variable=VC).grid(row=3, column=2, sticky=W)
+Checkbutton(sel, text="Sabato Pranzo", font=("Bahnschrift", 10), variable=SP).grid(row=3, column=2, sticky=W)
 
 Button(sel, text='Carica', command=validate, font=("Bahnschrift", 12)).grid(row=4, sticky=W, pady=4, padx=5)    #Confirmation button
 sel.mainloop()
