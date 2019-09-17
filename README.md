@@ -21,5 +21,5 @@ Qui di seguito alcune specifiche:
 <p>I presenti file sorgente sono concessi in licenza Open Source senza autorizzazione alla distribuzione o replica non autorizzata (GNU GPL v.3).<br>
 Il pacchetto è stato realizzato da LPGroup (dipartimento DEV), nella persona di Luca Pirovano.
 Ogni distribuzione e/o diffusione non autorizzata dei file contenuti in questa repository sarà perseguito a norma di legge.</p>
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Licenza Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />Quest'opera è distribuita con Licenza <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribuzione - Non commerciale - Non opere derivate 4.0 Internazionale</a>.
+    
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Licenza Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Tutto è Numero NFC System</span> di <a xmlns:cc="http://creativecommons.org/ns#" href="https://lucapirovano.com" property="cc:attributionName" rel="cc:attributionURL">LPGroup</a> è distribuito con Licenza <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribuzione - Non commerciale - Non opere derivate 4.0 Internazionale</a>.
